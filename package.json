@@ -9,6 +9,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "reactjs-popup": "^2.0.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -16,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tail":"npx tailwindcss -i ./src/style/input.css -o ./src/style/output.css --watch"
+    "tail": "npx tailwindcss -i ./src/style/input.css -o ./src/style/output.css --watch"
   },
   "eslintConfig": {
     "extends": [
