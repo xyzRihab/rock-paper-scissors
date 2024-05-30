@@ -8,7 +8,7 @@ import rules from "../images/image-rules.svg";
 import closeBtn from "../images/icon-close.svg";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const choices = {
   rock: { name: "rock", beats: "scissors" },
@@ -109,6 +109,12 @@ export default function Result() {
     determineWinner(userChoice, houseChoice);
   }, [userChoice, houseChoice]);
 
+  const navigate = useNavigate();
+
+  const handleReturn = () => {
+    navigate("/");
+  };
+
   return (
     <div className=" w-screen h-screen bg-Background grid place-items-center grid-rows-[1fr_2fr]">
       <div className=" w-full h-full grid place-items-center">
@@ -127,6 +133,12 @@ export default function Result() {
         </div>
         <p>{result}</p>
         <div>
+          <button
+            onClick={handleReturn}
+            className="text-white border-2 border-white px-10 py-1 m-10 rounded-xl"
+          >
+            Return
+          </button>
           <Popup
             contentStyle={{ width: "30%", borderRadius: "10px" }}
             trigger={
