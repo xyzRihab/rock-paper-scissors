@@ -6,40 +6,13 @@ import paper from "../images/icon-paper.svg";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import Rules from "./Rules";
+import RenderChoice from "./RenderChoice";
 
 const choices = {
   rock: { name: "rock", beats: "scissors" },
   paper: { name: "paper", beats: "rock" },
   scissors: { name: "scissors", beats: "paper" },
 };
-
-function renderUserChoice(choice) {
-  if (choice === "paper") {
-    return (
-      <div className=" z-0 bg-primary-Paper rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={paper} alt="paper" />
-        </div>
-      </div>
-    );
-  } else if (choice === "rock") {
-    return (
-      <div className=" z-0 bg-primary-Rock rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={rock} alt="rock" />
-        </div>
-      </div>
-    );
-  } else if (choice === "scissors") {
-    return (
-      <div className=" z-0 bg-primary-Scissors rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={scissors} alt="scissors" />
-        </div>
-      </div>
-    );
-  }
-}
 
 export default function Result() {
   const location = useLocation();
@@ -61,34 +34,6 @@ export default function Result() {
     }
   };
 
-  const renderHouseChoice = (houseChoice) => {
-    if (houseChoice === "paper") {
-      return (
-        <div className=" z-0 bg-primary-Paper rounded-full p-7">
-          <div className=" w-fit h-fit p-14 rounded-full bg-white">
-            <img src={paper} alt="paper" />
-          </div>
-        </div>
-      );
-    } else if (houseChoice === "rock") {
-      return (
-        <div className=" z-0 bg-primary-Rock rounded-full p-7">
-          <div className=" w-fit h-fit p-14 rounded-full bg-white">
-            <img src={rock} alt="rock" />
-          </div>
-        </div>
-      );
-    } else if (houseChoice === "scissors") {
-      return (
-        <div className=" z-0 bg-primary-Scissors rounded-full p-7">
-          <div className=" w-fit h-fit p-14 rounded-full bg-white">
-            <img src={scissors} alt="scissors" />
-          </div>
-        </div>
-      );
-    }
-  };
-
   const determineWinner = (user, house) => {
     console.log(user, house);
     if (user === house) {
@@ -102,7 +47,7 @@ export default function Result() {
 
   useEffect(() => {
     const randomChoice = getRandomChoice();
-    renderHouseChoice(settingHouseChoice(randomChoice));
+    settingHouseChoice(randomChoice);
     determineWinner(userChoice, houseChoice);
   }, [userChoice, houseChoice]);
 
@@ -125,8 +70,8 @@ export default function Result() {
       </div>
       <div className=" w-full h-full grid place-items-center">
         <div className=" w-2/3 h-full grid place-items-center grid-cols-2">
-          {renderUserChoice(userChoice)}
-          {renderHouseChoice(houseChoice)}
+          <RenderChoice choice={userChoice} />
+          <RenderChoice choice={houseChoice} />
         </div>
         <p>{result}</p>
         <div>
