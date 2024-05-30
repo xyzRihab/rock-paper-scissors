@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Rules from "./Rules";
 import RenderChoice from "./RenderChoice";
-import { ScoreContext } from "../ScoreContext";
+import { ScoreContext } from "../contexts/ScoreContext";
 import Score from "./Score";
 
 const choices = {

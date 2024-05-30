@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import triangle from "../images/bg-triangle.svg";
 
 import Rules from "./Rules";
-import { ScoreContext } from "../ScoreContext";
+import { ScoreContext } from "../contexts/ScoreContext";
 
 import Score from "./Score";
 import ChoiceButton from "./ChoiceButton";

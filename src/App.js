@@ -1,4 +1,4 @@
-import { ScoreProvider } from "./ScoreContext";
+import { ScoreProvider } from "./contexts/ScoreContext";
 import Router from "./routes/Router";
 import "./style/output.css";
 
