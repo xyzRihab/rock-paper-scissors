@@ -8,8 +8,40 @@ import rules from "../images/image-rules.svg";
 import closeBtn from "../images/icon-close.svg";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import { useLocation } from "react-router-dom";
+
+function renderUserChoice(choice) {
+  if (choice === "paper") {
+    return (
+      <div className=" z-0 bg-primary-Paper rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={paper} alt="paper" />
+        </div>
+      </div>
+    );
+  } else if (choice === "rock") {
+    return (
+      <div className=" z-0 bg-primary-Rock rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={rock} alt="rock" />
+        </div>
+      </div>
+    );
+  } else if (choice === "scissors") {
+    return (
+      <div className=" z-0 bg-primary-Scissors rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={scissors} alt="scissors" />
+        </div>
+      </div>
+    );
+  }
+}
 
 export default function Result() {
+  const location = useLocation();
+  const userChoice = location.state?.choice;
+
   return (
     <div className=" w-screen h-screen bg-Background grid place-items-center grid-rows-[1fr_2fr]">
       <div className=" w-full h-full grid place-items-center">
@@ -23,9 +55,8 @@ export default function Result() {
       </div>
       <div className=" w-full h-full grid place-items-center">
         <div className=" w-2/3 h-full grid place-items-center grid-cols-2">
-
+          {renderUserChoice(userChoice)}
         </div>
-
         <div>
           <Popup
             contentStyle={{ width: "30%", borderRadius: "10px" }}
