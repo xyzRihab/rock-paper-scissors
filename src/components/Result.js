@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/logo.svg";
 import rock from "../images/icon-rock.svg";
 import scissors from "../images/icon-scissors.svg";
@@ -38,9 +38,47 @@ function renderUserChoice(choice) {
   }
 }
 
+const renderHouseChoice = (houseChoice) => {
+  if (houseChoice === 0) {
+    return (
+      <div className=" z-0 bg-primary-Paper rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={paper} alt="paper" />
+        </div>
+      </div>
+    );
+  } else if (houseChoice === 1) {
+    return (
+      <div className=" z-0 bg-primary-Rock rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={rock} alt="rock" />
+        </div>
+      </div>
+    );
+  } else if (houseChoice === 2) {
+    return (
+      <div className=" z-0 bg-primary-Scissors rounded-full p-7">
+        <div className=" w-fit h-fit p-14 rounded-full bg-white">
+          <img src={scissors} alt="scissors" />
+        </div>
+      </div>
+    );
+  }
+};
+
 export default function Result() {
   const location = useLocation();
   const userChoice = location.state?.choice;
+  const [houseChoice, setHouseChoice] = useState(null);
+
+  const getRandomChoice = () => {
+    return Math.floor(Math.random() * 3);
+  };
+
+  useEffect(() => {
+    const randomChoice = getRandomChoice();
+    setHouseChoice(randomChoice);
+  }, [userChoice]);
 
   return (
     <div className=" w-screen h-screen bg-Background grid place-items-center grid-rows-[1fr_2fr]">
@@ -56,6 +94,7 @@ export default function Result() {
       <div className=" w-full h-full grid place-items-center">
         <div className=" w-2/3 h-full grid place-items-center grid-cols-2">
           {renderUserChoice(userChoice)}
+          {renderHouseChoice(houseChoice)}
         </div>
         <div>
           <Popup
