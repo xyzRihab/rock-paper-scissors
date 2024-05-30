@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../images/logo.svg";
 import rock from "../images/icon-rock.svg";
 import scissors from "../images/icon-scissors.svg";
@@ -7,6 +7,7 @@ import paper from "../images/icon-paper.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import Rules from "./Rules";
 import RenderChoice from "./RenderChoice";
+import { ScoreContext } from "../ScoreContext";
 
 const choices = {
   rock: { name: "rock", beats: "scissors" },
@@ -15,6 +16,7 @@ const choices = {
 };
 
 export default function Result() {
+  const { score, setScore } = useContext(ScoreContext);
   const location = useLocation();
   const userChoice = location.state?.choice;
   const [houseChoice, setHouseChoice] = useState(null);
@@ -35,21 +37,25 @@ export default function Result() {
   };
 
   const determineWinner = (user, house) => {
-    console.log(user, house);
     if (user === house) {
       setResult("draw");
     } else if (choices[user].beats === house) {
       setResult("win");
+      setScore(score + 1);
     } else {
       setResult("lose");
     }
   };
 
   useEffect(() => {
-    const randomChoice = getRandomChoice();
-    settingHouseChoice(randomChoice);
-    determineWinner(userChoice, houseChoice);
-  }, [userChoice, houseChoice]);
+    settingHouseChoice(getRandomChoice());
+  }, []);
+
+  useEffect(() => {
+    if (houseChoice !== null) {
+      determineWinner(userChoice, houseChoice);
+    }
+  }, [houseChoice]);
 
   const navigate = useNavigate();
 
@@ -64,7 +70,7 @@ export default function Result() {
           <img className=" place-self-start h-full" src={logo} alt="logo" />
           <div className="place-self-end grid grid-rows-[1fr_2fr] place-items-center bg-white rounded-xl h-full w-1/3 p-5">
             <p>SCORE</p>
-            <h3 className=" text-5xl">12</h3>
+            <h3 className=" text-5xl">{score}</h3>
           </div>
         </div>
       </div>

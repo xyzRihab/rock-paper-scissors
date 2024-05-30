@@ -1,11 +1,12 @@
+import { ScoreProvider } from "./ScoreContext";
 import Router from "./routes/Router";
 import "./style/output.css";
 
 function App() {
   return (
-    <div>
+    <ScoreProvider>
       <Router />
-    </div>
+    </ScoreProvider>
   );
 }
 
