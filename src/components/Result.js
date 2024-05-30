@@ -10,6 +10,12 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useLocation } from "react-router-dom";
 
+const choices = {
+  rock: { name: "rock", beats: "scissors" },
+  paper: { name: "paper", beats: "rock" },
+  scissors: { name: "scissors", beats: "paper" },
+};
+
 function renderUserChoice(choice) {
   if (choice === "paper") {
     return (
@@ -38,47 +44,70 @@ function renderUserChoice(choice) {
   }
 }
 
-const renderHouseChoice = (houseChoice) => {
-  if (houseChoice === 0) {
-    return (
-      <div className=" z-0 bg-primary-Paper rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={paper} alt="paper" />
-        </div>
-      </div>
-    );
-  } else if (houseChoice === 1) {
-    return (
-      <div className=" z-0 bg-primary-Rock rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={rock} alt="rock" />
-        </div>
-      </div>
-    );
-  } else if (houseChoice === 2) {
-    return (
-      <div className=" z-0 bg-primary-Scissors rounded-full p-7">
-        <div className=" w-fit h-fit p-14 rounded-full bg-white">
-          <img src={scissors} alt="scissors" />
-        </div>
-      </div>
-    );
-  }
-};
-
 export default function Result() {
   const location = useLocation();
   const userChoice = location.state?.choice;
   const [houseChoice, setHouseChoice] = useState(null);
+  const [result, setResult] = useState("");
 
   const getRandomChoice = () => {
     return Math.floor(Math.random() * 3);
   };
 
+  const settingHouseChoice = (randChoice) => {
+    if (randChoice === 0) {
+      setHouseChoice("paper");
+    } else if (randChoice === 1) {
+      setHouseChoice("rock");
+    } else if (randChoice === 2) {
+      setHouseChoice("scissors");
+    }
+  };
+
+  const renderHouseChoice = (houseChoice) => {
+    if (houseChoice === "paper") {
+      return (
+        <div className=" z-0 bg-primary-Paper rounded-full p-7">
+          <div className=" w-fit h-fit p-14 rounded-full bg-white">
+            <img src={paper} alt="paper" />
+          </div>
+        </div>
+      );
+    } else if (houseChoice === "rock") {
+      return (
+        <div className=" z-0 bg-primary-Rock rounded-full p-7">
+          <div className=" w-fit h-fit p-14 rounded-full bg-white">
+            <img src={rock} alt="rock" />
+          </div>
+        </div>
+      );
+    } else if (houseChoice === "scissors") {
+      return (
+        <div className=" z-0 bg-primary-Scissors rounded-full p-7">
+          <div className=" w-fit h-fit p-14 rounded-full bg-white">
+            <img src={scissors} alt="scissors" />
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const determineWinner = (user, house) => {
+    console.log(user, house);
+    if (user === house) {
+      setResult("draw");
+    } else if (choices[user].beats === house) {
+      setResult("win");
+    } else {
+      setResult("lose");
+    }
+  };
+
   useEffect(() => {
     const randomChoice = getRandomChoice();
-    setHouseChoice(randomChoice);
-  }, [userChoice]);
+    renderHouseChoice(settingHouseChoice(randomChoice));
+    determineWinner(userChoice, houseChoice);
+  }, [userChoice, houseChoice]);
 
   return (
     <div className=" w-screen h-screen bg-Background grid place-items-center grid-rows-[1fr_2fr]">
@@ -96,6 +125,7 @@ export default function Result() {
           {renderUserChoice(userChoice)}
           {renderHouseChoice(houseChoice)}
         </div>
+        <p>{result}</p>
         <div>
           <Popup
             contentStyle={{ width: "30%", borderRadius: "10px" }}
